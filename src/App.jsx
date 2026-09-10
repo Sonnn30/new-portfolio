@@ -5,8 +5,11 @@ import Hero1 from './components/hero1'
 import Navbar from './components/navbar'
 import Welcome from './components/welcome'
 import Hero2 from "./components/hero2"
+import Project from "./components/project"
+import Connect from "./components/connect"
 
 function App() {
+  // const observer = new IntersectionObserver()
   return (
     // <Routes>
     //   <Route path='/welcome' element={<Welcome/>}/>
@@ -15,6 +18,10 @@ function App() {
       <Navbar/>
       <Hero1/>
       <Hero2/>
+      <Project/>
+      <Connect/>
+
+
 
       <div>
         <h1 className='text-2xl text-red-600'>halo</h1>

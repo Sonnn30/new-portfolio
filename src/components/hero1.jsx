@@ -37,7 +37,7 @@ export default function hero1() {
           </button>
           <button className='flex gap-3 bg-white border-2 border-[#1E89FB] w-40 px-3 py-2.5 justify-center items-center rounded-3xl hover:cursor-pointer'>
             <p className='text-[15px] font-bold text-[#1E89FB]'>Connect</p>
-            <img src="/mail-icon.svg" alt="mail" width={20} height={20}/>
+            <img src="/Contact.svg" alt="mail" width={24} height={24}/>
           </button>
         </div>
         <div className='flex gap-3'>

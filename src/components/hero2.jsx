@@ -46,8 +46,8 @@ export default function hero2() {
             </div>
         </div>
         <div className='flex justify-between w-full'>
-            <div className='flex gap-3'>
-                <div className='flex flex-col gap-5 w-130 h-42 bg-gradient-to-b from-[#acd6fa] to-[#1e89fb55] rounded-xl px-4'>
+            <div className='flex gap-3 w-full'>
+                <div className='flex flex-col gap-5 w-[41%] h-42 bg-gradient-to-b from-[#acd6fa] to-[#1e89fb55] rounded-xl px-4'>
                     <div className='flex justify-between py-4'>
                         <div className='flex justify-center items-center px-3 h-13 bg-[#1E89FB] rounded-md'>
                             <img src="/lab-svgrepo.svg" alt="lab" width={32} height={32}/>
@@ -62,7 +62,7 @@ export default function hero2() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-5 w-130 h-42 bg-gradient-to-b from-[#acd6fa] to-[#1e89fb55] rounded-xl px-4'>
+                <div className='flex flex-col gap-5 w-[41%]  h-42 bg-gradient-to-b from-[#acd6fa] to-[#1e89fb55] rounded-xl px-4'>
                     <div className='flex justify-between py-4'>
                         <div className='flex justify-center items-center px-3 h-13 bg-[#1E89FB] rounded-md'>
                             <img src="/certificate.svg" alt="certificate" width={28} height={40}/>
@@ -77,7 +77,7 @@ export default function hero2() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-5 w-130 h-42 bg-gradient-to-b from-[#acd6fa] to-[#1e89fb55] rounded-xl px-4'>
+                <div className='flex flex-col gap-5 w-[41%]  h-42 bg-gradient-to-b from-[#acd6fa] to-[#1e89fb55] rounded-xl px-4'>
                     <div className='flex justify-between py-4'>
                         <div className='flex justify-center items-center px-3 h-13 bg-[#1E89FB] rounded-md'>
                             <img src="/sand-clock.svg" alt="lab" width={30} height={30}/>
