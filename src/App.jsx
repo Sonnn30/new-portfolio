@@ -7,6 +7,7 @@ import Welcome from './components/welcome'
 import Hero2 from "./components/hero2"
 import Project from "./components/project"
 import Connect from "./components/connect"
+import Footer from "./components/footer"
 
 function App() {
   // const observer = new IntersectionObserver()
@@ -20,20 +21,7 @@ function App() {
       <Hero2/>
       <Project/>
       <Connect/>
-
-
-
-      <div>
-        <h1 className='text-2xl text-red-600'>halo</h1>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1>Hello Motion!</h1>
-          </motion.div>
-
-      </div> 
+      <Footer/>
     </main>
   )
 }
