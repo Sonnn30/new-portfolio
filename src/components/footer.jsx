@@ -11,7 +11,7 @@ export default function footer() {
         <p className='text-[#1E89FB] text-[12px] font-medium'>@2026 All Rights Reserved</p>
       </div>
       <div className='flex flex-col items-center justify-center w-[17%] h-full gap-1'>
-        <div className='flex items-center justify-center gap-2 bg-[#F9B027] w-[65%] h-[35%] rounded-3xl'>
+        <div className='flex items-center justify-center gap-2 bg-[#F9B027] w-[65%] h-[32%] rounded-3xl'>
             <img src="/matahari.svg" alt="matahari" width={25} height={25} />
             <p className='text-[14px] font-semibold text-white'>Good Morning: 10:30</p>
         </div>
