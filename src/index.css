@@ -11,14 +11,13 @@ body {
   min-height: 100vh;
   background: linear-gradient(
     to bottom,
-    #ECF6FD 0%,
+    #def0fc 0%,
     #BDE1FD 100%
   );
 }
 
 html {
   min-height: 100%;
-  background: linear-gradient(to bottom, #eaf6ff, #bfe0fb) no-repeat fixed;
   scrollbar-color: #2f81f7 transparent; /* thumb | track */
   scrollbar-width: thin;
   scrollbar-gutter: stable; 

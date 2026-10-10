@@ -23,7 +23,7 @@ export default function footer() {
       <div className='flex flex-col items-center justify-center w-[17%] h-full gap-1'>
         {isNight ?
         <>
-          <div className='flex items-center justify-center gap-2 bg-[#6C3FA0] w-[65%] h-[32%] rounded-3xl'>
+          <div className='flex items-center justify-center gap-2 bg-[#7E52A0] w-[65%] h-[32%] rounded-3xl'>
               <img src="/moon.svg" alt="moon" width={25} height={25} />
               <p className='text-[14px] font-semibold text-white'>Good Night: {waktu.toLocaleTimeString('en-GB', {hour: '2-digit', minute: "2-digit"})}</p>
           </div>

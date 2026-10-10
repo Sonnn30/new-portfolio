@@ -30,12 +30,22 @@ export default function project() {
         return () => controller.abort()
     }, [isClick])
 
+    function check_level(x){
+        if(x >= 90 ){
+            return 'Expert'
+        }else if(x>= 75 && x < 90){
+            return 'Advanced'
+        }else if(x < 75){
+            return 'Intermediate'
+        }
+    }
+
   return (
     <div className='flex flex-col items-center justify-center gap-10 md:mb-40'>
       <h1 className='text-[#1E89FB] font-semibold text-[40px]'>Portfolio Showcase</h1>
       <div className='w-[85%] h-40 flex items-center justify-center gap-4 bg-white rounded-lg shadow-xl'>
         <div className={`flex flex-col items-center justify-center w-[32%] h-30 rounded-md hover:cursor-pointer ${
-                            isClick === 'Project' ? 'bg-[#c9e3fe]' : 'bg-white'
+                            isClick === 'Project' ? 'bg-[#c9e3fe]' : 'bg-white hover:bg-[#e0ecff] duration-150'
                         }`} onClick={() => setClick('Project')}>
             { isClick === 'Project' 
             ?(
@@ -53,7 +63,7 @@ export default function project() {
             )}
         </div>
         <div className={`flex flex-col items-center justify-center w-[32%] h-30 rounded-md hover:cursor-pointer ${
-                            isClick === 'Certificate' ? 'bg-[#c9e3fe]' : 'bg-white'
+                            isClick === 'Certificate' ? 'bg-[#c9e3fe]' : 'bg-white hover:bg-[#e0ecff] duration-150'
                         }`} onClick={() => setClick('Certificate')}>
             { isClick === 'Certificate' 
             ?(
@@ -71,7 +81,7 @@ export default function project() {
             )}
         </div>
         <div className={`flex flex-col items-center justify-center w-[32%] h-30 rounded-md hover:cursor-pointer ${
-                            isClick === 'Tech' ? 'bg-[#c9e3fe]' : 'bg-white'
+                            isClick === 'Tech' ? 'bg-[#c9e3fe]' : 'bg-white hover:bg-[#e0ecff] duration-150'
                         }`} onClick={() => setClick('Tech')}>
             { isClick === 'Tech' 
             ?(
@@ -132,18 +142,19 @@ export default function project() {
         :
         <div className='w-[85%] mx-auto'>
             <div className='grid grid-cols-2 md:grid-cols-5 gap-x-5 gap-y-7'>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
+                {techList.map((tech) => (
+                <div key={tech.id} className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
+                    <div className='flex justify-center items-center w-[87%] h-28 p-4 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl overflow-hidden'>
+                        <img src={tech.img} alt={tech.title} width={60} height={60}/>
                     </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
+                    <div className='flex flex-col flex-1 w-full px-4'>
+                        <p className='text-[18px] font-semibold text-start leading-tight'>{tech.title}</p>
+                        <p className='text-[16px] font-bold text-[#1E89FB]'>{tech.category}</p>
                     </div>
                     <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
+                        <p className='text-[#1E89FB] text-[18px] font-bold'>{check_level(tech.level)}</p>
                         <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
+                            <p className='text-[#1E89FB] text-[16px] font-bold'>{tech.level}%</p>
                         </div>
                     </div>
                     <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
@@ -152,246 +163,7 @@ export default function project() {
                         <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
                     </button>
                 </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
-                <div className='flex flex-col items-center w-full h-95 bg-gradient-to-b from-[#CEE9FF] to-[#ACD4FF]  border-2 border-[#1E89FB] rounded-2xl gap-6 py-5'>
-                    <div className='flex justify-center items-center w-[87%] py-5 bg-[#E0F2FE] border-2 border-[#1E89FB] rounded-xl'>
-                        <img src="/python-logo.svg" alt="certif" width={60} height={60}/>
-                    </div>
-                    <div className='flex flex-col w-full px-4'>
-                        <p className='text-[18px] font-semibold text-start leading-tight'>Python</p>
-                        <p className='text-[16px] font-bold text-[#1E89FB]'>Programming language</p>
-                    </div>
-                    <div className='w-[87%] h-[12%] flex justify-between items-center px-4 border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-lg'>
-                        <p className='text-[#1E89FB] text-[18px] font-bold'>Advanced</p>
-                        <div className='flex justify-center items-center bg-white w-[18%] rounded-md'>
-                            <p className='text-[#1E89FB] text-[16px] font-bold'>81%</p>
-                        </div>
-                    </div>
-                    <div className='w-[90%] h-[1px] bg-[#1E89FB]'></div>
-                    <button className='flex items-center justify-center gap-3 w-[45%] h-[13%] border-2 border-[#1E89FB] bg-[#E0F2FE] rounded-xl hover:cursor-pointer'>
-                        <p className='font-semibold text-[20px]'>View</p>
-                        <img src="/eye-logo.svg" alt="redirect" width={20} height={20} className='mt-1'/>
-                    </button>
-                </div>
+                ))}
             </div>        
         </div>
 
