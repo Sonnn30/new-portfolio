@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TypeAnimation } from 'react-type-animation'
 import useInView from './useInView'
+import { useScroll } from 'motion/react'
+import axios from 'axios'
 
 export default function hero2() {
     const [titleRef, titleVisible, titleAnimate] = useInView()
@@ -14,6 +16,13 @@ export default function hero2() {
     const [certificateRef, certificateVisible, certificateAnimate] = useInView()
     const [experienceRef, experienceVisible, experienceAnimate] = useInView()
     const [eduRef, eduVisible, eduAnimate] = useInView()
+
+    const [data, setData] = useState([])
+
+    useEffect(()=> {
+        axios.get("https://new-portfolio-be-production.up.railway.app/list-list")
+            .then((res) => setData(res.data))  
+    }, [])
 
     return (
         <div className='flex flex-col justify-center items-center gap-18 px-40'>
@@ -65,7 +74,7 @@ export default function hero2() {
                             <div className='flex justify-center items-center px-3 h-13 bg-[#1E89FB] rounded-md'>
                                 <img src="/lab-svgrepo.svg" alt="lab" width={32} height={32}/>
                             </div>
-                            <p className='text-[46px] font-semibold -mt-3'>3</p>
+                            <p className='text-[46px] font-semibold -mt-3'>{data.project}</p>
                         </div>
                         <div className='flex flex-col'>
                             <p className='font-semibold text-[18px] text-[#1E89FB]'>Total Projects</p>
@@ -80,7 +89,7 @@ export default function hero2() {
                             <div className='flex justify-center items-center px-3 h-13 bg-[#1E89FB] rounded-md'>
                                 <img src="/certificate.svg" alt="certificate" width={28} height={40}/>
                             </div>
-                            <p className='text-[46px] font-semibold -mt-3'>11</p>
+                            <p className='text-[46px] font-semibold -mt-3'>{data.certificate}</p>
                         </div>
                         <div className='flex flex-col'>
                             <p className='font-semibold text-[18px] text-[#1E89FB]'>Certificates</p>
@@ -95,7 +104,7 @@ export default function hero2() {
                             <div className='flex justify-center items-center px-3 h-13 bg-[#1E89FB] rounded-md'>
                                 <img src="/sand-clock.svg" alt="lab" width={30} height={30}/>
                             </div>
-                            <p className='text-[46px] font-semibold -mt-3'>1</p>
+                            <p className='text-[46px] font-semibold -mt-3'>{data.year}</p>
                         </div>
                         <div className='flex flex-col'>
                             <p className='font-semibold text-[18px] text-[#1E89FB]'>Years of Experience</p>

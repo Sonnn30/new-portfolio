@@ -1,12 +1,13 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
+import { useNavigate } from 'react-router'
 
-export default function project() {
+export default function Project() {
+    const navigate = useNavigate()
     const [isClick, setClick] = useState('Project')
     const [projectList, setProjectList] = useState([])
     const [certificateList, setCertificateList] = useState([])
     const [techList, setTechList] = useState([])
-    console.log(isClick)
     useEffect(() => {
         const controller = new AbortController()
         const base = "https://new-portfolio-be-production.up.railway.app"
@@ -15,15 +16,15 @@ export default function project() {
 
         if (isClick === 'Project') {
             axios.get(`${base}/project-list`, config)
-                .then((res) => {console.log(res.data) , setProjectList(res.data)})
+                .then((res) => setProjectList(res.data))
                 .catch((err) => { if (!axios.isCancel(err)) console.error(err) })
         } else if (isClick === 'Certificate') {
             axios.get(`${base}/certificate-list`, config)
-                .then((res) => {console.log(res.data) , setCertificateList(res.data)})
+                .then((res) => setCertificateList(res.data))
                 .catch((err) => { if (!axios.isCancel(err)) console.error(err) })
         } else if (isClick === 'Tech') {
             axios.get(`${base}/skill-list`, config)
-                .then((res) => {console.log(res.data) , setTechList(res.data)})
+                .then((res) => setTechList(res.data))
                 .catch((err) => { if (!axios.isCancel(err)) console.error(err) })
         }
 
@@ -109,7 +110,8 @@ export default function project() {
                         <img src={project.img_url} alt={project.title} width={845} height={100} className='border-2 border-[#1E89FB] rounded-2xl'/>
                         <h5 className='font-bold text-[18px]'>{project.title}</h5>
                         <p className='text-[16px]'>{project.short_desc}</p>
-                        <button className='flex justify-center items-center gap-2 border-2 border-[#1E89FB] bg-white w-[18%] h-[8%] rounded-lg hover:cursor-pointer'>
+                        <button className='flex justify-center items-center gap-2 border-2 border-[#1E89FB] bg-white w-[18%] h-[8%] rounded-lg hover:cursor-pointer' onClick={() => {localStorage.setItem('selectedId', project.id) 
+                            navigate('/project-detail')}}>
                             <p className='text-[#1E89FB] font-semibold '>View Detail</p>
                             <img src="/arrow-icon-right.svg" alt="" width={20} height={20}/>
                         </button>
