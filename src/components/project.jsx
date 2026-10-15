@@ -110,9 +110,9 @@ export default function Project() {
                         <img src={project.img_url} alt={project.title} width={845} height={100} className='border-2 border-[#1E89FB] rounded-2xl'/>
                         <h5 className='font-bold text-[18px]'>{project.title}</h5>
                         <p className='text-[16px]'>{project.short_desc}</p>
-                        <button className='flex justify-center items-center gap-2 border-2 border-[#1E89FB] bg-white w-[18%] h-[8%] rounded-lg hover:cursor-pointer' onClick={() => {localStorage.setItem('selectedId', project.id) 
+                        <button className='flex justify-center items-center gap-2 border-2 border-[#1E89FB] bg-white w-[18%] h-[8%] rounded-lg hover:cursor-pointer hover:shadow shadow-[#B9E0FF] hover:scale-105 duration-200' onClick={() => {localStorage.setItem('selectedId', project.id) 
                             navigate('/project-detail')}}>
-                            <p className='text-[#1E89FB] font-semibold '>View Detail</p>
+                            <p className='text-[#1E89FB] font-semibold]'>View Detail</p>
                             <img src="/arrow-icon-right.svg" alt="" width={20} height={20}/>
                         </button>
                     </div>

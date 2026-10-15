@@ -13,6 +13,18 @@ export default function Project_detail() {
     ?.split('\n')
     .map((f) => f.replace(/^\./, '').trim())
     .filter(Boolean) ?? []
+    const handlePrev = () => {
+      const imgs = projectDetail.img
+      if (!imgs?.length) return
+      const prevIndex = (currI - 1 + imgs.length) % imgs.length
+      setImgSelect(imgs[prevIndex])
+    }
+
+    const handleNext = () => {
+      const imgs = projectDetail.img
+      if (!imgs?.length) return
+      setImgSelect(imgs[(currI + 1) % imgs.length])
+    }
 
     useEffect(()=> {
       if (!id) return
@@ -47,7 +59,7 @@ export default function Project_detail() {
                 <img src="/code-icon.svg" alt="code"  width={22} height={22}/>
               </div>
               <div className='flex flex-col '>
-                <p className='text-[#1E89FB] font-semibold text-[20px]'>10</p>
+                <p className='text-[#1E89FB] font-semibold text-[20px]'>{projectDetail.total_tech}</p>
                 <p className='text-[14px]'>Tech Stack</p>
               </div>
             </div>
@@ -56,7 +68,7 @@ export default function Project_detail() {
                 <img src="/key.svg" alt="key"  width={22} height={22}/>
               </div>
               <div className='flex flex-col '>
-                <p className='text-[#1E89FB] font-semibold text-[20px]'>6</p>
+                <p className='text-[#1E89FB] font-semibold text-[20px]'>{features.length}</p>
                 <p className='text-[14px]'>Key Features</p>
               </div>
             </div>
@@ -66,10 +78,18 @@ export default function Project_detail() {
               <img src="/github.svg" alt="github" width={20} height={20}/>
               <p className='font-semibold'>Github</p>
             </a>
-            <a href={projectDetail.github} className='flex justify-center items-center gap-3 shadow-md bg-white border border-[#1E89FB] text-[#1E89FB] w-35 h-15 rounded-xl hover:cursor-pointer'>
+            <button onClick={() => {
+              const data = { title: projectDetail.title, url: projectDetail.github }
+              if (navigator.share) {
+                navigator.share(data).catch(() => {})
+              } else {
+                navigator.clipboard.writeText(data.url)
+                alert('Link disalin!')
+              }
+            }} className='flex justify-center items-center gap-3 shadow-md bg-white border border-[#1E89FB] text-[#1E89FB] w-35 h-15 rounded-xl hover:cursor-pointer'>
               <img src="/share.svg" alt="share" width={20} height={20}/>
               <p className='font-semibold'>Share</p>
-            </a>
+            </button>
           </div>
           <div className='flex flex-col gap-5'>
             <div className='flex gap-2'>
@@ -86,10 +106,16 @@ export default function Project_detail() {
           </div>
         </div>
         <div className='flex flex-col gap-10 w-[600px]'>
-          <div className='relative'>
+          <div className='relative group'>
             <img src={currentImg} alt="dummy" className='w-[600px] h-[450px] shadow-md shadow-[#1E89FB] rounded-xl'/>
             <div className='absolute top-2 right-2 bg-[#424242] w-12 h-7 rounded-2xl'>
               <p className='text-white text-center'>{currI + 1}/{projectDetail.img?.length}</p>
+            </div>
+            <div className='absolute flex justify-center items-center top-0 left-0 bg-black/20 h-full w-8 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer' onClick={handlePrev}>
+              <img src="/left-icon-b.svg" alt="left" className=' w-4 h-4 '/>
+            </div>
+            <div className='absolute flex justify-center items-center top-0 right-0 bg-black/20 h-full w-8 rounded-r-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer' onClick={handleNext}>
+              <img src="/right-icon-b.svg" alt="right" className=' w-4 h-4 '/>
             </div>
           </div>
           <div className='flex justify-center py-2 bg-[#FFEDDB] border-2 border-[#EA7817] rounded-xl gap-2'>

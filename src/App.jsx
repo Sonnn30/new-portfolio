@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router'
 import Hero1 from './components/hero1'
 import Navbar from './components/navbar'
@@ -7,12 +8,23 @@ import Connect from './components/connect'
 import Footer from './components/footer'
 import Project_detail from './components/project_detail'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 function App() {
   const { pathname } = useLocation()
   const isDetail = pathname === '/project-detail'
 
   return (
     <main className={`flex flex-col ${isDetail ? '' : 'gap-25'}`}>
+      <ScrollToTop />
       {!isDetail && <Navbar/>}
       <Routes>
         <Route path='/' element={

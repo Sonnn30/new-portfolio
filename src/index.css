@@ -14,6 +14,7 @@ body {
     #def0fc 0%,
     #BDE1FD 100%
   );
+  user-select: none;
 }
 
 html {
