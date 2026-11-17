@@ -125,7 +125,7 @@ export default function hero2() {
                             <h3 className='text-[18px] font-medium'>Universitas Bina Nusantara</h3>
                             <p className='text-[16px] font-light'>Bachelor of Computer Science, Intelligent System</p>
                             <p className='text-[16px] font-light'>Sep 2023 - Sep 2027</p> 
-                            <p className='text-[16px] font-light'><span className='text-[#067B80] font-normal'>Grade: 3.51/4.00</span> (7th Semester)</p>
+                            <p className='text-[16px] font-light'><span className='text-[#067B80] font-normal'>Grade: 3.60/4.00</span> (7th Semester)</p>
                         </div>
                     </div>
                     <div className='flex gap-10 items-center w-full bg-white mt-4 px-4 py-0.5 shadow-md'>

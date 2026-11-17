@@ -7,6 +7,8 @@ import Project from './components/project'
 import Connect from './components/connect'
 import Footer from './components/footer'
 import Project_detail from './components/project_detail'
+import Tech_stack from './components/tech_stack'
+import Chatbot from './components/chatbot'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -31,8 +33,10 @@ function App() {
           <>
             <Hero1/>
             <Hero2/>
+            <Tech_stack/>
             <Project/>
             <Connect/>
+            <Chatbot/>
           </>
         }/>
         <Route path='/project-detail' element={<Project_detail/>}/>
