@@ -1,8 +1,24 @@
+import axios from 'axios'
+import { motion } from 'motion/react'
+import React, { useEffect, useState } from 'react'
 
-import React, { useState } from 'react'
+const API_URL = "https://new-portfolio-be-production.up.railway.app"
+
+function getSessionId() {
+    let id = localStorage.getItem("chat_session_id")
+    if (!id) {
+        id = crypto.randomUUID()
+        localStorage.setItem("chat_session_id", id)
+    }
+    return id
+}
 
 export default function chatbot() {
-    const [ishide, setIsHide] = useState(false)
+    const [ishide, setIsHide] = useState(true)
+    const [selected_msg, setSelected_msg] = useState("")
+    const [change_page, setChange_page] = useState(false)
+    const [data_msg, Setdata_msg] = useState([])
+    const [inputText, setInputText] = useState('')
     const messages = [
         "Who is Wilson?",
         "What are Wilson's projects?",
@@ -11,9 +27,36 @@ export default function chatbot() {
         "What is Wilson's educational background?",
         "What roles is Wilson open to professionally?",
         "What are Wilson's interests?",
-        "Please guide me about this website",
-        "What is AskPorto?",
     ]
+
+
+    async function sendMessage(text) {
+        const res = await axios.post(`${API_URL}/input-chat`, {
+            role: "user",
+            message: text,
+            session_id: getSessionId(),
+        })
+        return res.data
+    }
+
+    useEffect(() => {
+        axios.get(`${API_URL}/get-chat/${getSessionId()}`)
+            .then((res) => Setdata_msg(res.data))
+            .catch((err) => console.error(err))
+    }, [])
+
+    const handleSend = async (text) => {
+        try {
+            Setdata_msg((prev) => [...prev, { role: "user", message: text }])
+            const data = await sendMessage(text)
+            Setdata_msg((prev) => [...prev, { role: "bot", message: data.answer }])
+        } catch (err) {
+            console.error(err.response?.data?.detail ?? "Something went wrong")
+        }
+    }
+
+    console.log(data_msg)
+
   return (
     <div className='fixed right-0 bottom-0 p-7'>
         {ishide ? (
@@ -25,34 +68,81 @@ export default function chatbot() {
             </>
         ) : (
             <>
-                <div className='relative flex flex-col gap-4 bg-linear-to-br from-[#1885fa] to-[#62adfd] w-115 h-145 rounded-xl shadow-2xl'>
-                    <div className='flex w-full justify-between py-2 px-4'>
-                        <p className='text-white font-semibold text-[16px]'>AskPorto</p>
-                        <div className='flex justify-center items-center bg-white w-5 h-5 rounded-full hover:cursor-pointer' onClick={() => setIsHide(!ishide)}>
-                            <img src="/close-svgrepo-com.svg" alt="close" className='w-3 h-3'/>
-                        </div>
-                    </div>
-                    <div className='flex flex-col gap-2 px-4'>
-                        <p className='text-white font-bold text-[20px]'>Hello! I'm AskPorto.</p>
-                        <p className='text-blue-100 font-semibold text-[16px]'>How can I help you explore more about Wilson today?</p>
-                    </div>
+                    {change_page ? (
+                        <div>
+                            <div className='relative flex flex-col bg-white w-115 h-145 rounded-xl shadow-2xl'>
+                                <div className='bg-linear-to-br from-[#0858ae] to-[#62adfd] flex w-full justify-between py-2 px-4 rounded-t-xl'>
+                                    <p className='text-white font-semibold text-[16px]'>AskPorto</p>
+                                    <div className='flex justify-center items-center bg-white w-5 h-5 rounded-full hover:cursor-pointer' onClick={() => setIsHide(!ishide)}>
+                                        <img src="/close-svgrepo-com.svg" alt="close" className='w-3 h-3'/>
+                                    </div>
+                                </div>
 
-                    <div className='grid grid-cols-2 px-4'>
-                        <div className='flex justify-center items-center p-4 bg-white rounded-2xl border border-[#1E89FB] shadow shadow-blue-300'>
-                            <p className='text-2xl font-semibold'></p>
-                        </div>
-                    </div>
 
-                    <div className='absolute flex justify-center items-center gap-2 bottom-0 bg-white w-full h-15 rounded-b-xl py-2 px-4'>
-                        <div className='flex items-center gap-4 border border-[#1E89FB] rounded-lg w-full h-10 shadow-xl/30 shadow-blue-300'>
-                            <textarea name="user" id="user" rows={1} placeholder='Type your message...' className='w-full h-full px-3 py-2.5 leading-5 resize-none outline-none overflow-hidden'></textarea>
+                                <div className='flex flex-col flex-1 min-h-0 overflow-y-auto gap-2 py-4 px-3'>
+                                    {data_msg.map((chat, index) =>(
+                                        chat.role == 'user' ? (
+                                            <div key={index} className='bg-[#1E89FB] self-end max-w-[80%] px-3 rounded-t-xl rounded-l-xl rounded-br-sm'>
+                                                <p className='text-white font-semibold px-0.5 py-2 text-[14px]'>{chat.message}</p>
+                                            </div>
+
+                                        )    
+                                        :
+                                        (
+                                            <div key={index} className='bg-[#1E89FB] self-start max-w-[80%] px-3 rounded-t-xl rounded-r-xl rounded-bl-sm'>
+                                                <p className='text-white font-semibold px-0.5 py-2 text-[14px]'>{chat.message}</p>
+                                            </div>
+                                        )
+
+                                    ))}
+
+     
+                                </div>
+
+                                <div className='flex justify-center items-center gap-2 bottom-0 bg-white w-full h-15 rounded-b-xl py-2 px-4'>
+                                    <div className='flex items-center gap-4 border border-[#1E89FB] rounded-lg w-full h-10 shadow-xl/30 shadow-blue-300'>
+                                        <textarea name="user" id="user" value={inputText} onChange={(e) => setInputText(e.target.value)} rows={1} placeholder='Type your message...' className='w-full h-full px-3 py-2.5 leading-5 placeholder:text-[14px] resize-none outline-none overflow-hidden'></textarea>
+                                    </div>
+                                    <div className='bg-[#1E89FB] w-9 h-9 shrink-0 rounded-full flex justify-center items-center hover:cursor-pointer' onClick={() => sendMessage()}>
+                                        <img src="/send-logo.svg" alt="send" className='w-5 h-5'/>
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
-                        <div className='bg-[#1E89FB] w-9 h-9 shrink-0 rounded-full flex justify-center items-center hover:cursor-pointer'>
-                            <img src="/send-logo.svg" alt="send" className='w-5 h-5'/>
+                    ) : (
+                        <div>
+                            <div className='relative flex flex-col gap-4 bg-linear-to-br from-[#0858ae] to-[#62adfd] w-115 h-145 rounded-xl shadow-2xl'>
+                                <div className='flex w-full justify-between py-2 px-4'>
+                                    <p className='text-white font-semibold text-[16px]'>AskPorto</p>
+                                    <div className='flex justify-center items-center bg-white w-5 h-5 rounded-full hover:cursor-pointer' onClick={() => setIsHide(!ishide)}>
+                                        <img src="/close-svgrepo-com.svg" alt="close" className='w-3 h-3'/>
+                                    </div>
+                                </div>
+                                <div className='flex flex-col gap-2 px-4'>
+                                    <p className='text-white font-bold text-[20px]'>Hello! I'm AskPorto.</p>
+                                    <p className='text-blue-100 font-semibold text-[16px]'>How can I help you explore more about Wilson today?</p>
+                                </div>
+
+                                <div className='flex flex-wrap gap-2 px-4 mt-5'>
+                                    {messages.map((text, index) => (
+                                        <motion.div key={index} initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.2, delay: index * 0.1 }} className='flex justify-center items-center px-3 py-2 bg-white rounded-3xl border border-[#1E89FB] hover:shadow shadow-blue-300 hover:cursor-pointer' onClick={() => (setSelected_msg(text), setChange_page(true), handleSend(text))}>
+                                                <p className='text-[13px] text-blue-950 font-semibold'>{text}</p>
+                                        </motion.div>
+                                        ))}
+                                </div>
+
+                                <div className='absolute flex justify-center items-center gap-2 bottom-0 bg-white w-full h-15 rounded-b-xl py-2 px-4'>
+                                    <div className='flex items-center gap-4 border border-[#1E89FB] rounded-lg w-full h-10 shadow-xl/30 shadow-blue-300'>
+                                        <textarea name="user" id="user" rows={1} value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder='Type your message...' className='w-full h-full px-3 py-2.5 leading-5 placeholder:text-[14px] resize-none outline-none overflow-hidden'></textarea>
+                                    </div>
+                                    <div className='bg-[#1E89FB] w-9 h-9 shrink-0 rounded-full flex justify-center items-center hover:cursor-pointer'>
+                                        <img src="/send-logo.svg" alt="send" className='w-5 h-5'/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            
+                    ) }
             </>
             
         ) 
