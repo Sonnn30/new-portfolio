@@ -13,15 +13,102 @@ function getSessionId() {
     return id
 }
 
-function parseMarkdown(text) {
+// Membaca **tebal** di dalam satu teks
+function parseInline(text) {
     const parts = text.split(/(\*\*[\s\S]*?(?:\*\*|$))/g)
 
-    return parts.map((part, i) => {
-        if (part.startsWith('**')) {
-            return <strong key={i}>{part.slice(2).replace(/\*\*$/, '')}</strong>
+    return parts.map((part, i) =>
+        part.startsWith('**')
+            ? <strong key={i}>{part.slice(2).replace(/\*\*$/, '')}</strong>
+            : part
+    )
+}
+
+// Isi satu sel tabel (mengubah <br> jadi baris baru)
+function renderCell(text) {
+    return text.split(/<br\s*\/?>/i).map((line, i) => (
+        <span key={i}>
+            {i > 0 && <br />}
+            {parseInline(line.trim())}
+        </span>
+    ))
+}
+
+// Baris tabel selalu diawali tanda |
+const isTableLine = (line) => line.trim().startsWith('|')
+
+// Baris pemisah seperti |-------|-------|
+const isSeparator = (line) => /^[\s|:-]+$/.test(line) && line.includes('-')
+
+// Memecah "| a | b |" menjadi ["a", "b"]
+const splitCells = (line) =>
+    line.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim())
+
+function Table({ lines }) {
+    const hasHeader = lines.length > 1 && isSeparator(lines[1])
+    const header = hasHeader ? splitCells(lines[0]) : null
+    const rows = lines
+        .slice(hasHeader ? 2 : 0)
+        .filter((l) => !isSeparator(l))
+        .map(splitCells)
+
+    return (
+        <div className='overflow-x-auto my-2'>
+            <table className='border-collapse text-[12px]'>
+                {header && (
+                    <thead>
+                        <tr>
+                            {header.map((cell, i) => (
+                                <th key={i} className='border border-blue-200 bg-blue-50 px-2 py-1 text-left'>
+                                    {renderCell(cell)}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                )}
+                <tbody>
+                    {rows.map((row, r) => (
+                        <tr key={r}>
+                            {row.map((cell, i) => (
+                                <td key={i} className='border border-blue-200 px-2 py-1 align-top'>
+                                    {renderCell(cell)}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+function parseMarkdown(text) {
+    const lines = text.split('\n')
+    const blocks = []
+    let i = 0
+
+    while (i < lines.length) {
+        const group = []
+        const tableMode = isTableLine(lines[i])
+
+        // kumpulkan baris berurutan yang jenisnya sama (tabel atau teks biasa)
+        while (i < lines.length && isTableLine(lines[i]) === tableMode) {
+            group.push(lines[i])
+            i++
         }
-        return part
-    })
+
+        if (tableMode) {
+            blocks.push(<Table key={blocks.length} lines={group} />)
+        } else {
+            blocks.push(
+                <span key={blocks.length} className='whitespace-pre-wrap'>
+                    {parseInline(group.join('\n').trim())}
+                </span>
+            )
+        }
+    }
+
+    return blocks
 }
 
 function TypingText({ text, speed = 15, step = 2, onType }) {
@@ -129,7 +216,7 @@ export default function chatbot() {
                                 </div>
 
 
-                                <div ref={chatRef} className='flex flex-col flex-1 min-h-0 overflow-y-auto gap-2 py-4 px-3'>
+                                <div ref={chatRef} className='flex flex-col flex-1 min-h-0 overflow-y-auto gap-3 py-4 px-3'>
                                     {data_msg.map((chat, index) =>(
                                         chat.role == 'user' ? (
                                             <div key={index} className='bg-linear-to-r from-[#4da2fd] to-[#0858ae] self-end max-w-[80%] px-3 rounded-t-xl rounded-l-xl rounded-br-sm'>
@@ -139,13 +226,13 @@ export default function chatbot() {
                                         )    
                                         :
                                         (
-                                            <div key={index} className='bg-white border-2 border-blue-200 shadow-xl/20 shadow-blue-200 self-start max-w-[80%] px-3 rounded-t-xl rounded-r-xl rounded-bl-sm'>
-                                                <p className='text-black font-semibold px-0.5 py-3 text-[14px] whitespace-pre-wrap'>
-                                                    {chat.isNew
-                                                        ? <TypingText text={chat.message} onType={scrollToBottom} />
-                                                        : parseMarkdown(chat.message)}
-                                                </p>
-                                            </div>
+                                    <div key={index} className='bg-white border-2 border-blue-200 shadow-xl/20 shadow-blue-200 self-start max-w-[100%] min-w-0 px-3 rounded-t-xl rounded-r-xl rounded-bl-sm'>
+                                        <div className='text-black font-semibold px-0.5 py-3 text-[14px]'>
+                                            {chat.isNew
+                                                ? <TypingText text={chat.message} onType={scrollToBottom} />
+                                                : parseMarkdown(chat.message)}
+                                        </div>
+                                    </div>
                                         )
 
                                     ))}
