@@ -145,7 +145,7 @@ export default function chatbot() {
         "What tech stack does Wilson use?",
         "What is Wilson's educational background?",
         "What roles is Wilson open to professionally?",
-        "What are Wilson's interests?",
+        "What Wilson interest?",
     ]
     const submitMessage = () => {
         const text = inputText.trim()
