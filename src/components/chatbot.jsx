@@ -376,8 +376,8 @@ export default function Chatbot() {
                                 transition={{ duration: 1.2 }}
                             >
                                 <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.3, ease: easeInOut }} src="/door-open.svg" alt="open" className='w-30 h-30 drop-shadow-[0_-5px_25px_#fde047] drop-shadow-yellow-300' />
-                                <motion.p initial={{ y: 35, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, ease: easeInOut }} className='text-white font-bold text-3xl'>Hello & Welcome!</motion.p>
-                                <motion.p initial={{ y: 35, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.9, ease: easeInOut }} className='text-white text-[16px]'>Nice to meet you! How can I help you today?</motion.p>
+                                <motion.p initial={{ y: 35, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, ease: easeInOut, delay:0.3 }} className='text-white font-bold text-3xl'>Hello & Welcome!</motion.p>
+                                <motion.p initial={{ y: 35, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.9, ease: easeInOut, delay:0.3 }} className='text-white text-[16px]'>Nice to meet you! How can I help you today?</motion.p>
                             </motion.div>
                         )}
                     </AnimatePresence>
